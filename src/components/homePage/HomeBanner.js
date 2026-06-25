@@ -40,59 +40,67 @@ function useWindowSize() {
 
 
 const HomeBanner = ({ onCursor }) => {
-//   const size = useWindowSize()
-//   const { currentTheme } = useGlobalStateContext()
-//   let canvas = useRef(null)
-//   useEffect(() => {
-    // let renderingElement = canvas.current
+  const size = useWindowSize()
+  const { currentTheme } = useGlobalStateContext()
+  let canvas = useRef(null)
+
+  useEffect(() => {
+    let renderingElement = canvas.current
+    if (!renderingElement || !size.width || !size.height) return
+
     // create an offscreen canvas only for the drawings
-    // let drawingElement = renderingElement.cloneNode()
-    // let drawingCtx = drawingElement.getContext("2d")
-    // let renderingCtx = renderingElement.getContext("2d")
-    // let lastX
-    // let lastY
-    // let moving = false
+    let drawingElement = renderingElement.cloneNode()
+    let drawingCtx = drawingElement.getContext("2d")
+    let renderingCtx = renderingElement.getContext("2d")
+    let lastX
+    let lastY
+    let moving = false
 
-//     renderingCtx.globalCompositeOperation = "source-over"
-//     renderingCtx.fillStyle = currentTheme === "dark" ? "#000000" : "#ffffff"
-//     renderingCtx.fillRect(0, 0, size.width, size.height)
+    renderingCtx.globalCompositeOperation = "source-over"
+    renderingCtx.fillStyle = currentTheme === "dark" ? "#000000" : "#ffffff"
+    renderingCtx.fillRect(0, 0, size.width, size.height)
 
-//     renderingElement.addEventListener("mouseover", ev => {
-//       moving = true
-//       lastX = ev.pageX - renderingElement.offsetLeft
-//       lastY = ev.pageY - renderingElement.offsetTop
-//     })
+    const handleStart = ev => {
+      moving = true
+      lastX = ev.pageX - renderingElement.offsetLeft
+      lastY = ev.pageY - renderingElement.offsetTop
+    }
 
-//     renderingElement.addEventListener("click", ev => {
-//       moving = true
-//       lastX = ev.pageX - renderingElement.offsetLeft
-//       lastY = ev.pageY - renderingElement.offsetTop
-//     })
+    const handleEnd = ev => {
+      moving = false
+      lastX = ev.pageX - renderingElement.offsetLeft
+      lastY = ev.pageY - renderingElement.offsetTop
+    }
 
-//     renderingElement.addEventListener("mouseup", ev => {
-//       moving = false
-//       lastX = ev.pageX - renderingElement.offsetLeft
-//       lastY = ev.pageY - renderingElement.offsetTop
-//     })
+    const handleMove = ev => {
+      if (!moving) return
+      drawingCtx.globalCompositeOperation = "source-over"
+      renderingCtx.globalCompositeOperation = "destination-out"
+      let currentX = ev.pageX - renderingElement.offsetLeft
+      let currentY = ev.pageY - renderingElement.offsetTop
+      drawingCtx.lineJoin = "round"
+      drawingCtx.moveTo(lastX, lastY)
+      drawingCtx.lineTo(currentX, currentY)
+      drawingCtx.closePath()
+      drawingCtx.lineWidth = 120
+      drawingCtx.stroke()
+      lastX = currentX
+      lastY = currentY
+      renderingCtx.drawImage(drawingElement, 0, 0)
+    }
 
-//     renderingElement.addEventListener("mousemove", ev => {
-//       if (moving) {
-//         drawingCtx.globalCompositeOperation = "source-over"
-//         renderingCtx.globalCompositeOperation = "destination-out"
-//         let currentX = ev.pageX - renderingElement.offsetLeft
-//         let currentY = ev.pageY - renderingElement.offsetTop
-//         drawingCtx.lineJoin = "round"
-//         drawingCtx.moveTo(lastX, lastY)
-//         drawingCtx.lineTo(currentX, currentY)
-//         drawingCtx.closePath()
-//         drawingCtx.lineWidth = 120
-//         drawingCtx.stroke()
-//         lastX = currentX
-//         lastY = currentY
-//         renderingCtx.drawImage(drawingElement, 0, 0)
-//       }
-//     })
-//   }, [currentTheme, size.height, size.width])
+    renderingElement.addEventListener("mouseover", handleStart)
+    renderingElement.addEventListener("click", handleStart)
+    renderingElement.addEventListener("mouseup", handleEnd)
+    renderingElement.addEventListener("mousemove", handleMove)
+
+    return () => {
+      renderingElement.removeEventListener("mouseover", handleStart)
+      renderingElement.removeEventListener("click", handleStart)
+      renderingElement.removeEventListener("mouseup", handleEnd)
+      renderingElement.removeEventListener("mousemove", handleMove)
+    }
+  }, [currentTheme, size.height, size.width])
 
   const container = {
     initial: { y: 800 },
@@ -128,7 +136,13 @@ const HomeBanner = ({ onCursor }) => {
           src={require("../../assets/video/video.mp4")}
         />
       </Video>
-
+      <Canvas
+        height={size.height}
+        width={size.width}
+        ref={canvas}
+        onMouseEnter={() => onCursor("hovered")}
+        onMouseLeave={onCursor}
+      />
       <BannerTitle variants={container} initial="initial" animate="animate">
         <Headline variants={item}>DIG</Headline>
         <Headline variants={item}>DEEP</Headline>
