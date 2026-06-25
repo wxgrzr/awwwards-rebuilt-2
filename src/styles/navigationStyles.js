@@ -12,6 +12,22 @@ export const Nav = styled(motion.div)`
   color: #000;
   z-index: 100;
   overflow: hidden;
+  @media (max-width: 600px) {
+    /* Flow the nav as a scrollable column so it adapts to any height
+       instead of relying on fixed absolute offsets. */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    > div {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      min-height: 100%;
+      padding-top: 24px;
+      padding-bottom: 24px;
+      box-sizing: border-box;
+    }
+  }
 `
 
 export const NavHeader = styled.div`
@@ -19,6 +35,14 @@ export const NavHeader = styled.div`
   position: relative;
   h2 {
     color: ${props => props.theme.background};
+  }
+  @media (max-width: 600px) {
+    top: auto;
+    order: 0;
+    /* the inner Flex uses noHeight (height: 0); let it size to content */
+    > div {
+      height: auto;
+    }
   }
 `
 export const CloseNav = styled.div`
@@ -34,6 +58,14 @@ export const CloseNav = styled.div`
       display: block;
       background: ${props => props.theme.background};
       margin: 8px;
+      transition: transform 0.3s ease;
+      /* cross the two bars into an 'X' */
+      &:first-child {
+        transform: translateY(8px) rotate(45deg);
+      }
+      &:last-child {
+        transform: translateY(-8px) rotate(-45deg);
+      }
     }
   }
 `
@@ -84,9 +116,11 @@ export const NavList = styled.div`
     }
   }
   @media (max-width: 600px) {
+    height: auto;
+    order: 1;
     align-items: flex-start;
     ul {
-      margin-top: 96px;
+      margin-top: 32px;
       li {
         font-size: 1.75rem;
         height: 56px;
@@ -98,6 +132,11 @@ export const NavList = styled.div`
           .arrow {
             display: none;
           }
+        }
+        /* No hover on touch — the tapped (or default first) row stays
+           white to show which clip is playing. */
+        &.active .link {
+          color: #fff;
         }
       }
     }
@@ -116,7 +155,10 @@ export const NavFooter = styled.div`
     fill: ${props => props.theme.background};
   }
   @media (max-width: 600px) {
-    padding: 24px 0;
+    position: static;
+    order: 3;
+    margin-top: auto;
+    padding: 24px 0 0;
     /* stack the email / phone / social row */
     > div {
       flex-direction: column;
@@ -154,7 +196,39 @@ export const NavVideos = styled.div`
     }
   }
   @media (max-width: 600px) {
-    /* hover-reveal videos add nothing on touch and overlap the menu */
-    display: none;
+    /* No hover on touch, so instead of the curtain-reveal we flow the
+       looping video into the column between the menu and footer and let
+       it autoplay. In-flow + fixed height so it adapts to any viewport. */
+    position: relative;
+    order: 2;
+    display: block;
+    top: auto;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 240px;
+    margin: 32px 0;
+    flex: 0 0 auto;
+    .reveal {
+      /* The video is a child of the curtain, so collapsing the curtain's
+         width collapses the video too. Instead keep it full-width but
+         transparent so the video behind always shows (and overrides
+         framer's width animation on tap). */
+      width: 100% !important;
+      background: transparent !important;
+    }
+    .video {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
 `

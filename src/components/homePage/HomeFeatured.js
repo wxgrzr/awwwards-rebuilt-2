@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Link } from "gatsby"
 import { motion } from "framer-motion"
 //Styled Components
@@ -12,26 +12,18 @@ import {
 
 //Scroll Behavior
 import { useInView } from "react-intersection-observer"
-import { useAnimation } from "framer-motion"
 
 const HomeFeatured = ({ onCursor }) => {
   const [hovered, setHovered] = useState(false)
-  const animation = useAnimation()
   const [featuredRef, inView] = useInView({
     triggerOnce: true,
     rootMargin: "-300px",
   })
 
-  useEffect(() => {
-    if (inView) {
-      animation.start("visible")
-    }
-  }, [animation, inView])
-
   return (
     <HomeFeaturedSection
       ref={featuredRef}
-      animate={animation}
+      animate={inView ? "visible" : "hidden"}
       initial="hidden"
       variants={{
         visible: {

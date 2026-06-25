@@ -69,6 +69,10 @@ export const Cursor = styled.div`
   will-change: width, height, transform, border;
   pointer-events: none;
   z-index: 999;
+  /* No pointer on touch devices — hide the custom cursor entirely */
+  @media (max-width: 600px) {
+    display: none;
+  }
   &.pointer {
     border: 4px solid ${props => props.theme.text} !important;
   }

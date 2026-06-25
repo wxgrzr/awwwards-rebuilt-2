@@ -25,6 +25,12 @@ const GlobalStyle = createGlobalStyle`
     cursor: none;
   }
 
+  @media (max-width: 600px) {
+    * {
+      cursor: auto;
+    }
+  }
+
   html {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;

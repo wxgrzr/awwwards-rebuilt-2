@@ -40,7 +40,7 @@ const Navigation = ({ toggleMenu, setToggleMenu, onCursor }) => {
   const [revealVideo, setRevealVideo] = useState({
     show: false,
     video: "featured-video.mp4",
-    key: "0",
+    key: 0,
   })
 
   return (
@@ -73,9 +73,17 @@ const Navigation = ({ toggleMenu, setToggleMenu, onCursor }) => {
                 <ul>
                   {navRoutes.map(route => (
                     <motion.li
+                      className={revealVideo.key === route.id ? "active" : ""}
                       onMouseEnter={() => onCursor("pointer")}
                       onMouseLeave={onCursor}
                       key={route.id}
+                      onClick={() =>
+                        setRevealVideo({
+                          show: true,
+                          video: route.video,
+                          key: route.id,
+                        })
+                      }
                       onHoverStart={() =>
                         setRevealVideo({
                           show: true,
