@@ -4,6 +4,17 @@ import { motion } from "framer-motion"
 export const FooterNav = styled(motion.div)`
   height: 300px;
   margin-top: 296px;
+  @media (max-width: 600px) {
+    height: auto;
+    margin-top: 120px;
+    padding-bottom: 56px;
+    /* stack the contact columns + social row (Container > Flex) */
+    > div > div {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 32px;
+    }
+  }
 `
 
 export const FooterContent = styled.div`
@@ -17,6 +28,10 @@ export const FooterContent = styled.div`
     css`
       flex: 2;
     `}
+  @media (max-width: 600px) {
+    font-size: 18px;
+    line-height: 1.4;
+  }
 `
 
 export const FooterSocial = styled.div`

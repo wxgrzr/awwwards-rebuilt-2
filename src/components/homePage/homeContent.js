@@ -1,29 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 //Scroll Behavior
 import { useInView } from 'react-intersection-observer';
-import { useAnimation } from 'framer-motion';
 
 import { Container } from '../../styles/globalStyles';
 import { HomeContentSection, Content } from '../../styles/homeStyles';
 
 const HomeContent = () => {
-  const animation = useAnimation();
   const [contentRef, inView] = useInView({
     triggerOnce: true,
     rootMargin: '-300px'
   });
 
-  useEffect(() => {
-    if (inView) {
-      animation.start('visible');
-    }
-  }, [animation, inView]);
-
   return (
     <HomeContentSection
       ref={contentRef}
-      animate={animation}
+      animate={inView ? 'visible' : 'hidden'}
       initial='hidden'
       variants={{
         visible: {

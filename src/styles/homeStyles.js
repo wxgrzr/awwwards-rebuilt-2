@@ -8,6 +8,10 @@ export const Banner = styled.div`
   width: 100%;
   position: relative;
   margin-bottom: 296px;
+  @media (max-width: 600px) {
+    height: 70vh;
+    margin-bottom: 120px;
+  }
 `
 export const Video = styled.div`
   height: 100%;
@@ -31,6 +35,10 @@ export const BannerTitle = styled(motion.h1)`
   left: -18px;
   color: ${props => props.theme.text};
   pointer-events: none;
+  @media (max-width: 600px) {
+    bottom: -48px;
+    left: 0;
+  }
 `
 
 export const Headline = styled(motion.span)`
@@ -38,11 +46,17 @@ export const Headline = styled(motion.span)`
   font-size: clamp(6rem, 25vw, 23rem);
   font-weight: 900;
   line-height: 0.76;
+  @media (max-width: 600px) {
+    font-size: clamp(3.5rem, 22vw, 6rem);
+  }
 `
 
 //Content Section
 export const HomeContentSection = styled(motion.div)`
   margin-bottom: 200px;
+  @media (max-width: 600px) {
+    margin-bottom: 100px;
+  }
 `
 export const Content = styled(motion.h2)`
   width: 53%;
@@ -50,6 +64,11 @@ export const Content = styled(motion.h2)`
   font-weight: 400;
   margin-left: 124px;
   color: ${props => props.theme.text};
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: 1.5rem;
+    margin-left: 0;
+  }
 `
 
 //Featured Section
@@ -60,6 +79,12 @@ export const HomeFeaturedSection = styled(motion.div)`
     margin-bottom: 200px;
     position: relative;
     display: block;
+  }
+  @media (max-width: 600px) {
+    margin-bottom: 100px;
+    a {
+      margin-bottom: 120px;
+    }
   }
 `
 
@@ -104,6 +129,27 @@ export const FeaturedContent = styled(motion.div)`
       }
     }
   }
+  @media (max-width: 600px) {
+    height: 280px;
+    padding: 32px 24px;
+    h3 {
+      font-size: 1.2rem;
+    }
+    .featured-title {
+      bottom: -56px;
+      font-size: 2.6rem;
+      line-height: 40px;
+      .arrow {
+        width: 56px;
+        height: 38px;
+        svg {
+          top: 8px;
+          left: -22px;
+          width: 50px;
+        }
+      }
+    }
+  }
 `
 
 export const FeaturedVideo = styled.div`
@@ -114,10 +160,16 @@ export const FeaturedVideo = styled.div`
   top: 0;
   display: block;
   overflow: hidden;
+  @media (max-width: 600px) {
+    height: 280px;
+  }
 `
 
 export const FeaturedProjects = styled.div`
   margin-top: 200px;
+  @media (max-width: 600px) {
+    margin-top: 100px;
+  }
   button {
     background: #ea281e;
     color: #fff;
@@ -132,6 +184,12 @@ export const FeaturedProjects = styled.div`
     span {
       margin-right: 108px;
       display: block;
+    }
+    @media (max-width: 600px) {
+      font-size: 1.1rem;
+      span {
+        margin-right: 64px;
+      }
     }
     &:before,
     &:after {
@@ -174,6 +232,16 @@ export const About = styled.div`
     line-height: 1.6rem;
     margin-left: 124px;
     color: ${props => props.theme.text};
+  }
+  @media (max-width: 600px) {
+    h2 {
+      width: 100%;
+      font-size: 1.5rem;
+      margin-left: 0;
+    }
+    p {
+      margin-left: 0;
+    }
   }
 `
 export const Services = styled.div``

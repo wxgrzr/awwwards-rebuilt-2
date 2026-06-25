@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 // Styled Components
 import { Container, Flex } from "../../styles/globalStyles"
 //Framer Motion
-import { motion, useAnimation } from "framer-motion"
+import { motion } from "framer-motion"
 //Home Component
 import {
   HomeAboutSection,
@@ -77,23 +77,16 @@ const accordionIds = [
 const HomeAbout = ({ onCursor }) => {
   //Default state, using number for our id. Which ever the number/id is in the state. That will be opened.
   const [expanded, setExpanded] = useState(0)
-  const animation = useAnimation()
   const [aboutRef, inView] = useInView({
     triggerOnce: true,
     // Giving our scrollwheel additional 300px before executing animation
     rootMargin: "-300px",
   })
 
-  useEffect(() => {
-    if (inView) {
-      animation.start("visible")
-    }
-  }, [animation, inView])
-
   return (
     <HomeAboutSection
       ref={aboutRef}
-      animate={animation}
+      animate={inView ? "visible" : "hidden"}
       initial="hidden"
       variants={{
         visible: {

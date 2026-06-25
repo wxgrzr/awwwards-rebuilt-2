@@ -7,6 +7,9 @@ export const Container = styled.div`
   position: relative;
   width: auto;
   height: 100%;
+  @media (max-width: 600px) {
+    padding: 0 20px;
+  }
   @media (min-width: 1024px) {
     max-width: 960px;
   }
@@ -66,6 +69,10 @@ export const Cursor = styled.div`
   will-change: width, height, transform, border;
   pointer-events: none;
   z-index: 999;
+  /* No pointer on touch devices — hide the custom cursor entirely */
+  @media (max-width: 600px) {
+    display: none;
+  }
   &.pointer {
     border: 4px solid ${props => props.theme.text} !important;
   }
@@ -83,6 +90,12 @@ export const Cursor = styled.div`
     border: 4px solid ${props => props.theme.text} !important;
     top: ${props => props.theme.top} !important;
     left: ${props => props.theme.left} !important;
+  }
+  &.white {
+    background: transparent !important;
+    width: 56px;
+    height: 56px;
+    border: 4px solid ${props => props.theme.text} !important;
   }
   &.nav-open {
     background: ${props => props.theme.text};
