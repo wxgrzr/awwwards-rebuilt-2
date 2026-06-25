@@ -58,6 +58,7 @@ export const NavList = styled.div`
         position: relative;
         display: flex;
         align-items: center;
+        transition: color 0.3s ease;
         .arrow {
           height: 76px;
           margin-right: 8px;
@@ -67,6 +68,17 @@ export const NavList = styled.div`
         width: 100px;
         path {
           fill: ${props => props.theme.background};
+          transition: fill 0.3s ease;
+        }
+      }
+      /* On hover the background video plays; switch to white so the
+         title and arrow stay legible against dark frames. */
+      &:hover {
+        .link {
+          color: #fff;
+        }
+        svg path {
+          fill: #fff;
         }
       }
     }
