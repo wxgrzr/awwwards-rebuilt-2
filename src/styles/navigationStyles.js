@@ -71,6 +71,25 @@ export const NavList = styled.div`
       }
     }
   }
+  @media (max-width: 600px) {
+    align-items: flex-start;
+    ul {
+      margin-top: 96px;
+      li {
+        font-size: 1.75rem;
+        height: 56px;
+        line-height: 56px;
+        /* Touch has no hover, so reveal the title and drop the arrow
+           instead of leaving it shifted off-screen by the motion offset. */
+        .link {
+          transform: none !important;
+          .arrow {
+            display: none;
+          }
+        }
+      }
+    }
+  }
 `
 export const NavFooter = styled.div`
   position: absolute;
@@ -83,6 +102,15 @@ export const NavFooter = styled.div`
   }
   svg path {
     fill: ${props => props.theme.background};
+  }
+  @media (max-width: 600px) {
+    padding: 24px 0;
+    /* stack the email / phone / social row */
+    > div {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
   }
 `
 
@@ -112,5 +140,9 @@ export const NavVideos = styled.div`
     video {
       height: 100%;
     }
+  }
+  @media (max-width: 600px) {
+    /* hover-reveal videos add nothing on touch and overlap the menu */
+    display: none;
   }
 `
