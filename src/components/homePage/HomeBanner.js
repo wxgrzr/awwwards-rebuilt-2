@@ -1,107 +1,8 @@
-import React, { useEffect, useRef,  useState } from "react"
-import { useGlobalStateContext } from "../../context/globalContext"
-//Context
+import React from "react"
 //Styled Components
-import {
-  Banner,
-  Video,
-  BannerTitle,
-  Canvas,
-  Headline,
-} from "../../styles/homeStyles"
-
-
-const isBrowser = typeof window !== "undefined"
-
-//Custom Hook
-function useWindowSize() {
-  function getSize() {
-    return {
-      width: isBrowser && window.innerWidth,
-      height: isBrowser && window.innerHeight,
-    }
-  }
-  const [windowSize, setWindowSize] = useState(getSize)
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowSize(getSize())
-    }
-
-    window.addEventListener("resize", handleResize)
-
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
-  return windowSize
-}
-
-
-
+import { Banner, Video, BannerTitle, Headline } from "../../styles/homeStyles"
 
 const HomeBanner = ({ onCursor }) => {
-  const size = useWindowSize()
-  const { currentTheme } = useGlobalStateContext()
-  let canvas = useRef(null)
-
-  useEffect(() => {
-    let renderingElement = canvas.current
-    if (!renderingElement || !size.width || !size.height) return
-
-    // create an offscreen canvas only for the drawings
-    let drawingElement = renderingElement.cloneNode()
-    let drawingCtx = drawingElement.getContext("2d")
-    let renderingCtx = renderingElement.getContext("2d")
-    let lastX
-    let lastY
-    let moving = false
-
-    renderingCtx.globalCompositeOperation = "source-over"
-    renderingCtx.fillStyle = currentTheme === "dark" ? "#000000" : "#ffffff"
-    renderingCtx.fillRect(0, 0, size.width, size.height)
-
-    const handleStart = ev => {
-      moving = true
-      lastX = ev.pageX - renderingElement.offsetLeft
-      lastY = ev.pageY - renderingElement.offsetTop
-    }
-
-    const handleEnd = ev => {
-      moving = false
-      lastX = ev.pageX - renderingElement.offsetLeft
-      lastY = ev.pageY - renderingElement.offsetTop
-    }
-
-    const handleMove = ev => {
-      if (!moving) return
-      drawingCtx.globalCompositeOperation = "source-over"
-      renderingCtx.globalCompositeOperation = "destination-out"
-      let currentX = ev.pageX - renderingElement.offsetLeft
-      let currentY = ev.pageY - renderingElement.offsetTop
-      drawingCtx.lineJoin = "round"
-      drawingCtx.moveTo(lastX, lastY)
-      drawingCtx.lineTo(currentX, currentY)
-      drawingCtx.closePath()
-      drawingCtx.lineWidth = 120
-      drawingCtx.stroke()
-      lastX = currentX
-      lastY = currentY
-      renderingCtx.drawImage(drawingElement, 0, 0)
-    }
-
-    renderingElement.addEventListener("mouseover", handleStart)
-    renderingElement.addEventListener("click", handleStart)
-    renderingElement.addEventListener("mouseup", handleEnd)
-    renderingElement.addEventListener("mousemove", handleMove)
-
-    return () => {
-      renderingElement.removeEventListener("mouseover", handleStart)
-      renderingElement.removeEventListener("click", handleStart)
-      renderingElement.removeEventListener("mouseup", handleEnd)
-      renderingElement.removeEventListener("mousemove", handleMove)
-    }
-  }, [currentTheme, size.height, size.width])
-
   const container = {
     initial: { y: 800 },
     animate: {
@@ -124,7 +25,10 @@ const HomeBanner = ({ onCursor }) => {
 
   return (
     <Banner>
-      <Video>
+      <Video
+        onMouseEnter={() => onCursor("hovered")}
+        onMouseLeave={onCursor}
+      >
         <video
           height="100%"
           width="100%"
@@ -136,13 +40,6 @@ const HomeBanner = ({ onCursor }) => {
           src={require("../../assets/video/video.mp4")}
         />
       </Video>
-      <Canvas
-        height={size.height}
-        width={size.width}
-        ref={canvas}
-        onMouseEnter={() => onCursor("hovered")}
-        onMouseLeave={onCursor}
-      />
       <BannerTitle variants={container} initial="initial" animate="animate">
         <Headline variants={item}>DIG</Headline>
         <Headline variants={item}>DEEP</Headline>
