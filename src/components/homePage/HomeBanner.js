@@ -121,7 +121,10 @@ const HomeBanner = ({ onCursor }) => {
           height="100%"
           width="100%"
           loop
+          muted
           autoPlay
+          playsInline
+          preload="auto"
           src={require("../../assets/video/video.mp4")}
         />
       </Video>
