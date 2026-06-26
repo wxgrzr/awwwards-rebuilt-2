@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
@@ -89,6 +89,15 @@ const Layout = ({ children }) => {
   }
 
   const [toggleMenu, setToggleMenu] = useState(false)
+
+  // Lock the page behind the menu so the content underneath can't scroll
+  // while the overlay is open.
+  useEffect(() => {
+    document.body.style.overflow = toggleMenu ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [toggleMenu])
 
   return (
     <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
