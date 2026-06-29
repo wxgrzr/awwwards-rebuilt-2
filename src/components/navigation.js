@@ -164,34 +164,34 @@ const Navigation = ({ toggleMenu, setToggleMenu, onCursor }) => {
                   </FooterSocial>
                 </Flex>
               </NavFooter>
+              <NavVideos>
+                <motion.div
+                  animate={{ width: revealVideo.show ? 0 : "100%" }}
+                  className="reveal"
+                >
+                  <div className="video">
+                    <AnimatePresence initial={false} exitBeforeEnter>
+                      <motion.video
+                        ref={autoplayInline}
+                        key={revealVideo.key}
+                        src={require(`../assets/video/${revealVideo.video}`)}
+                        initial={{ opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                          duration: 0.2,
+                          ease: "easeInOut",
+                        }}
+                        loop
+                        autoPlay
+                        muted
+                        playsInline
+                      ></motion.video>
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              </NavVideos>
             </Container>
-            <NavVideos>
-              <motion.div
-                animate={{ width: revealVideo.show ? 0 : "100%" }}
-                className="reveal"
-              >
-                <div className="video">
-                  <AnimatePresence initial={false} exitBeforeEnter>
-                    <motion.video
-                      ref={autoplayInline}
-                      key={revealVideo.key}
-                      src={require(`../assets/video/${revealVideo.video}`)}
-                      initial={{ opacity: 0 }}
-                      exit={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{
-                        duration: 0.2,
-                        ease: "easeInOut",
-                      }}
-                      loop
-                      autoPlay
-                      muted
-                      playsInline
-                    ></motion.video>
-                  </AnimatePresence>
-                </div>
-              </motion.div>
-            </NavVideos>
           </Nav>
         )}
       </AnimatePresence>

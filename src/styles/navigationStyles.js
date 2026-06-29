@@ -169,7 +169,12 @@ export const NavFooter = styled.div`
 `
 
 export const NavVideos = styled.div`
-  position: absolute;
+  /* Fixed (viewport-relative) so the panel spans 25% → the right edge on every
+     screen. It stays inside the centered, max-width Container in the markup so
+     the mobile layout can flow it between the list and footer (see the media
+     query below), but on desktop we must NOT inherit the Container's capped
+     width — position: fixed escapes that and pins to the viewport instead. */
+  position: fixed;
   top: 0;
   bottom: 0;
   /* Pin the panel from 25% to the right edge (right: 0) rather than
