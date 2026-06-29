@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const Layout = ({ children }) => {
-  const { cursorStyles, currentTheme } = useGlobalStateContext()
+  const { cursorStyles, currentTheme, toggleMenu } = useGlobalStateContext()
   const dispatch = useGlobalDispatchContext()
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -88,7 +88,10 @@ const Layout = ({ children }) => {
     })
   }
 
-  const [toggleMenu, setToggleMenu] = useState(false)
+  // Menu open/close lives in global context so any component (e.g. the
+  // home page's "All Projects" button) can open the navigation panel.
+  const setToggleMenu = value =>
+    dispatch({ type: "TOGGLE_MENU", toggleMenu: value })
 
   // Lock the page behind the menu so the content underneath can't scroll
   // while the overlay is open.

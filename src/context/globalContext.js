@@ -19,6 +19,12 @@ const globalReducer = (state, action) => {
         cursorType: action.cursorType,
       }
     }
+    case "TOGGLE_MENU": {
+      return {
+        ...state,
+        toggleMenu: action.toggleMenu,
+      }
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
     }
@@ -35,6 +41,7 @@ export const GlobalProvider = ({ children }) => {
     //     : window.localStorage.getItem("theme"),
     cursorType: false,
     cursorStyles: ["pointer", "hovered", "locked", "white"],
+    toggleMenu: false,
   })
 
   return (

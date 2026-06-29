@@ -10,11 +10,15 @@ import {
   FeaturedProjects,
 } from "../../styles/homeStyles"
 
+//Context
+import { useGlobalDispatchContext } from "../../context/globalContext"
+
 //Scroll Behavior
 import { useInView } from "react-intersection-observer"
 
 const HomeFeatured = ({ onCursor }) => {
   const [hovered, setHovered] = useState(false)
+  const dispatch = useGlobalDispatchContext()
   const [featuredRef, inView] = useInView({
     triggerOnce: true,
     rootMargin: "-300px",
@@ -89,7 +93,11 @@ const HomeFeatured = ({ onCursor }) => {
       <Container>
         <FeaturedProjects>
           <Flex flexEnd>
-            <button>
+            <button
+              onClick={() => dispatch({ type: "TOGGLE_MENU", toggleMenu: true })}
+              onMouseEnter={() => onCursor("pointer")}
+              onMouseLeave={onCursor}
+            >
               <span>All Projects</span>
             </button>
           </Flex>
