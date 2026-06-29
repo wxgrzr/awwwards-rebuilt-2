@@ -12,6 +12,7 @@ import {
 } from "../styles/navigationStyles"
 import { FooterContent, FooterSocial } from "../styles/footerStyles"
 import { Instagram, Facebook, Vimeo } from "../assets/svg/social-icons"
+import { autoplayInline } from "../utils/autoplayInline"
 
 const navRoutes = [
   {
@@ -172,6 +173,7 @@ const Navigation = ({ toggleMenu, setToggleMenu, onCursor }) => {
                 <div className="video">
                   <AnimatePresence initial={false} exitBeforeEnter>
                     <motion.video
+                      ref={autoplayInline}
                       key={revealVideo.key}
                       src={require(`../assets/video/${revealVideo.video}`)}
                       initial={{ opacity: 0 }}
@@ -184,6 +186,7 @@ const Navigation = ({ toggleMenu, setToggleMenu, onCursor }) => {
                       loop
                       autoPlay
                       muted
+                      playsInline
                     ></motion.video>
                   </AnimatePresence>
                 </div>

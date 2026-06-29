@@ -1,6 +1,8 @@
 import React from "react"
 //Styled Components
 import { Banner, Video, BannerTitle, Headline } from "../../styles/homeStyles"
+//Utils
+import { autoplayInline } from "../../utils/autoplayInline"
 
 const HomeBanner = ({ onCursor }) => {
   const container = {
@@ -30,6 +32,7 @@ const HomeBanner = ({ onCursor }) => {
         onMouseLeave={onCursor}
       >
         <video
+          ref={autoplayInline}
           height="100%"
           width="100%"
           loop

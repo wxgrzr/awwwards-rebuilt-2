@@ -12,6 +12,8 @@ import {
 
 //Context
 import { useGlobalDispatchContext } from "../../context/globalContext"
+//Utils
+import { autoplayInline } from "../../utils/autoplayInline"
 
 //Scroll Behavior
 import { useReveal } from "../../hooks/useReveal"
@@ -79,9 +81,11 @@ const HomeFeatured = ({ onCursor }) => {
           </FeaturedContent>
           <FeaturedVideo>
             <video
+              ref={autoplayInline}
               loop
               autoPlay
               muted
+              playsInline
               src={require("../../assets/video/video.mp4")}
             ></video>
           </FeaturedVideo>
