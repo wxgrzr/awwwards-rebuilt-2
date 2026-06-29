@@ -15,7 +15,7 @@ import {
 //Context
 import { useGlobalStateContext } from "../../context/globalContext"
 //Scroll Observer
-import { useInView } from "react-intersection-observer"
+import { useReveal } from "../../hooks/useReveal"
 
 // Accordion Data
 const accordionIds = [
@@ -77,11 +77,7 @@ const accordionIds = [
 const HomeAbout = ({ onCursor }) => {
   //Default state, using number for our id. Which ever the number/id is in the state. That will be opened.
   const [expanded, setExpanded] = useState(0)
-  const [aboutRef, inView] = useInView({
-    triggerOnce: true,
-    // Giving our scrollwheel additional 300px before executing animation
-    rootMargin: "-300px",
-  })
+  const [aboutRef, inView] = useReveal()
 
   return (
     <HomeAboutSection

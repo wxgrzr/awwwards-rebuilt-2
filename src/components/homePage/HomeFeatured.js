@@ -10,15 +10,18 @@ import {
   FeaturedProjects,
 } from "../../styles/homeStyles"
 
+//Context
+import { useGlobalDispatchContext } from "../../context/globalContext"
+//Utils
+import { autoplayInline } from "../../utils/autoplayInline"
+
 //Scroll Behavior
-import { useInView } from "react-intersection-observer"
+import { useReveal } from "../../hooks/useReveal"
 
 const HomeFeatured = ({ onCursor }) => {
   const [hovered, setHovered] = useState(false)
-  const [featuredRef, inView] = useInView({
-    triggerOnce: true,
-    rootMargin: "-300px",
-  })
+  const dispatch = useGlobalDispatchContext()
+  const [featuredRef, inView] = useReveal()
 
   return (
     <HomeFeaturedSection
@@ -78,9 +81,11 @@ const HomeFeatured = ({ onCursor }) => {
           </FeaturedContent>
           <FeaturedVideo>
             <video
+              ref={autoplayInline}
               loop
               autoPlay
               muted
+              playsInline
               src={require("../../assets/video/video.mp4")}
             ></video>
           </FeaturedVideo>
@@ -89,7 +94,11 @@ const HomeFeatured = ({ onCursor }) => {
       <Container>
         <FeaturedProjects>
           <Flex flexEnd>
-            <button>
+            <button
+              onClick={() => dispatch({ type: "TOGGLE_MENU", toggleMenu: true })}
+              onMouseEnter={() => onCursor("pointer")}
+              onMouseLeave={onCursor}
+            >
               <span>All Projects</span>
             </button>
           </Flex>

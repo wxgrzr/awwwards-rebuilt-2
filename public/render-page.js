@@ -32185,6 +32185,13 @@ const globalReducer = (state, action) => {
         };
       }
 
+    case "TOGGLE_MENU":
+      {
+        return { ...state,
+          toggleMenu: action.toggleMenu
+        };
+      }
+
     default:
       {
         throw new Error(`Unhandled action type: ${action.type}`);
@@ -32205,7 +32212,8 @@ const GlobalProvider = ({
     //     ? "dark"
     //     : window.localStorage.getItem("theme"),
     cursorType: false,
-    cursorStyles: ["pointer", "hovered", "locked", "white"]
+    cursorStyles: ["pointer", "hovered", "locked", "white"],
+    toggleMenu: false
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GlobalDispatchContext.Provider, {
     value: dispatch

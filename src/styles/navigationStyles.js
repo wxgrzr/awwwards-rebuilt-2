@@ -169,13 +169,23 @@ export const NavFooter = styled.div`
 `
 
 export const NavVideos = styled.div`
-  position: absolute;
+  /* Fixed (viewport-relative) so the panel spans 25% → the right edge on every
+     screen. It stays inside the centered, max-width Container in the markup so
+     the mobile layout can flow it between the list and footer (see the media
+     query below), but on desktop we must NOT inherit the Container's capped
+     width — position: fixed escapes that and pins to the viewport instead. */
+  position: fixed;
   top: 0;
   bottom: 0;
+  /* Pin the panel from 25% to the right edge (right: 0) rather than
+     left: 25% + width: 100%, which pushed the right edge to 125% of the
+     viewport and left a gap (page background) at the real right edge on
+     ultrawide screens. overflow: hidden keeps the video clipped to the panel. */
   left: 25%;
+  right: 0;
   z-index: -1;
   height: 100%;
-  width: 100%;
+  overflow: hidden;
   background: #000;
   .reveal {
     width: 100%;
@@ -188,11 +198,20 @@ export const NavVideos = styled.div`
   .video {
     background: #000;
     position: absolute;
+    top: 0;
+    left: 0;
+    /* The panel is 75vw wide (25% → 100%). Size the video to that width so it
+       fills the panel on ultrawide instead of its narrower intrinsic size.
+       It's a child of the collapsing curtain, so use a viewport unit (not %)
+       to keep its width independent of the reveal's width animation. */
+    width: 75vw;
     height: 100%;
     margin: 0;
     z-index: -1;
     video {
+      width: 100%;
       height: 100%;
+      object-fit: cover;
     }
   }
   @media (max-width: 600px) {
