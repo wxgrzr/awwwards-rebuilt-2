@@ -14,15 +14,12 @@ import {
 import { useGlobalDispatchContext } from "../../context/globalContext"
 
 //Scroll Behavior
-import { useInView } from "react-intersection-observer"
+import { useReveal } from "../../hooks/useReveal"
 
 const HomeFeatured = ({ onCursor }) => {
   const [hovered, setHovered] = useState(false)
   const dispatch = useGlobalDispatchContext()
-  const [featuredRef, inView] = useInView({
-    triggerOnce: true,
-    rootMargin: "-300px",
-  })
+  const [featuredRef, inView] = useReveal()
 
   return (
     <HomeFeaturedSection

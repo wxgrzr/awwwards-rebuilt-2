@@ -1,16 +1,13 @@
 import React from 'react';
 
 //Scroll Behavior
-import { useInView } from 'react-intersection-observer';
+import { useReveal } from '../../hooks/useReveal';
 
 import { Container } from '../../styles/globalStyles';
 import { HomeContentSection, Content } from '../../styles/homeStyles';
 
 const HomeContent = () => {
-  const [contentRef, inView] = useInView({
-    triggerOnce: true,
-    rootMargin: '-300px'
-  });
+  const [contentRef, inView] = useReveal();
 
   return (
     <HomeContentSection
